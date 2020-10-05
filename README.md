@@ -19,7 +19,7 @@ A PrintWriter object is used to write the output file.
 To run this program, you need to have a github account setup with an SSH key. Access to a terminal and git commands
 are needed, unless your IDE of choice has git support. If you choose to run the program with this IDE,
 the setup process will differ.  
-1. Clone to your machine using 'git clone git@github.com:bertom1/CISC3130_Lab3.git' 
-2. Open the project directory with the command 'cd CISC3130_Lab3'
-3. To compile the program, use the command 'javac Main.java'
-4. To run the program, use the command 'java Main'  
+1. Clone to your machine using `git clone git@github.com:bertom1/CISC3130_Lab3.git` 
+2. Open the project directory with the command `cd CISC3130_Lab3`
+3. To compile the program, use the command `javac Main.java`
+4. To run the program, use the command `java Main`  
