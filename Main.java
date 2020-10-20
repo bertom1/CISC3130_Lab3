@@ -13,8 +13,6 @@ public class Main {
 	public static void main(String[] args) {
 		//creates object for class that reads csv file and writes output file
 		fileReadWrite test = new fileReadWrite();
-		//runs object method to read file
-		test.getArtistMap();
 		//runs method to create Artist Linked List
 		test.getArtistList();
 		//prints number of artist
@@ -29,17 +27,15 @@ public class Main {
 class fileReadWrite {
 	//class variables that can only be accessed within the class
 	private int numberOfArtists;
-	//created HashMap as class variable to use within both read/write methods without creating a new HashMap
-	private HashMap<String, Integer> hmap = new HashMap<String, Integer>();
 	private TopStreamingArtists artistList = new TopStreamingArtists();
 
 	//returns the value of the private variable numberOfArtists
 	public int getNumberOfArtists() {
-		return this.numberOfArtists;
+		return artistList.size();
 	}
 	
 	//method to parse the csv file
-	public void getArtistMap() {		
+	public void getArtistList() {		
 		try {
 			//variable for name of csv file
 			//uses actual file name since it is stored in the same folder, can also use file path if stored elsewhere 
@@ -57,56 +53,13 @@ class fileReadWrite {
 				//assigns third element to variable. With proper formatting, the artist name should fall under the third element
 				String artist = fileLine[2];
 				//checks if artist is already listed in HashMap
-				if (hmap.containsKey(artist)) {
-					//increments the Integer value for the artist,
-					hmap.replace(artist, hmap.get(artist) + 1);
-				}
-				//adds new artist to HashMap and increases number of artists
-				else {
-					hmap.put(artist, 1);
-					numberOfArtists += 1;
-				}
+				artistList.sortedAdd(new Artist(artist));
 			}
-			scan.close();
+            scan.close();
 		}
 		catch(Exception e) {
 			System.out.println(e.getMessage());
-		}
-	}
-
-	//Adds artist nodes to list. Uses set of keys from existing Hash Map. Only creates sorted file
-	public void getArtistList() {
-		Set<String> artistNames = hmap.keySet();
-		for (String name: artistNames) {
-			artistList.sortedAdd(new Artist(name));
-		}
-	}
-
-	//Method to create and write file with artist
-	public void writeArtistMapFile() {
-		try {
-            //creates new file
-		File file = new File("Artists-WeekOf09032020.txt");
-		//PrintWriter object with generic name to write into the text file.
-		PrintWriter pw = new PrintWriter(file);
-		//obtains all keys in HashMap and stores in a set
-		Set<String> keys = hmap.keySet();
-		//writes number of artists in file
-		pw.println("Number of artists: " + numberOfArtists);
-		//used to explain formatting within file
-		pw.println("Formatting for file: \rArtist Name: number of apperances");
-		//loop to write artists into file along with their number of occurances
-		//get method retrieves the element(number of appearances) from the key (artist)
-		for (String test: keys) {
-			pw.println(test +  ": " + hmap.get(test));
-		}
-		//used to indicate that file has been written
-		System.out.println("The list of artist has been written");
-		pw.close(); 
-		}
-		catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+        }
 	}
 
 	//creates file using Artist Linked List. Does not modify list
@@ -134,8 +87,6 @@ class fileReadWrite {
 	}
 	
 }
-
-
 //Artist class, nodes for list
 class Artist {
 	//stores Artist name and node for next artist in list
@@ -190,16 +141,19 @@ class TopStreamingArtists {
 		//Artist variable to mark current node/position in list
 		Artist position = first;
 		//Stores artist name, sets to lowercase 
-		String artistName = artist.getName().toLowerCase();
+		String artistName = artist.getName();
 		//checks for empty list, doesn't update position to skip while loop
 		if (this.isEmpty()) {
 		    this.addFirst(artist);
 		}
 		//loops through the entire list till the end, or if it is forced out of the loop
 		while (position != null) {
-			String posName = position.getName().toLowerCase();
-			//checks for insertion at head. If true, new node becomes the head of the list.
-			if (artistName.compareTo(posName) <= 0 && position == first) {
+			String posName = position.getName();
+            if (artistName.compareTo(posName) == 0) {
+                position = null;
+            }
+            //checks for insertion at head. If true, new node becomes the head of the list.
+			else if (artistName.compareToIgnoreCase(posName) < 0 && position == first) {
 				artist.setNext(first);
 				first = artist;
 				size += 1;
@@ -207,13 +161,13 @@ class TopStreamingArtists {
 				position = null;
 			} 
 			//checks for insertion at tail. If true, new node becomes last element of list
-			else if (artistName.compareTo(posName) >= 0 && position.getNext() == null) {
+			else if (artistName.compareToIgnoreCase(posName) > 0 && position.getNext() == null) {
 				position.setNext(artist);
 				size += 1;
 				position = null;
 			}
 			//checks for insertion within list. If true, new node is inserted between current node and next node. 
-			else if (artistName.compareTo(posName) >= 0 && artistName.compareTo(position.getNext().getName().toLowerCase()) <= 0) {
+			else if (artistName.compareToIgnoreCase(posName) > 0 && artistName.compareToIgnoreCase(position.getNext().getName()) < 0) {
 				Artist temp = position.getNext();
 				artist.setNext(temp);
 				position.setNext(artist);
