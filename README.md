@@ -10,7 +10,7 @@ Linked list class is used (TopStreamingArtists) which uses a node class Artist. 
 then sorting. This is done with the method sortedAdd(Artist artist) in the TopStreamingArtists class, which is similar to the bubble sort algorithm as it compares the node being 
 added with the current node as well as the following node, but inserts between the two nodes. This method also ignores case when comparing, but maintains the original case when inserting,
 so the artist names in the output file appear the same as they are in original file. For this implementation, the HashMap key set is used to get all the artist names, although
-the code could be refactored to only use the linked list class (a good TODO task).
+the code could be refactored to only use the linked list class (~~a good TODO task~~ done).
 A PrintWriter object is used to write the output file. 
 ### Dependencies
 * Written using Java 14
