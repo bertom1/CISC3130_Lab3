@@ -26,7 +26,6 @@ public class Main {
 //this class handles reading the input file and writing the output file
 class fileReadWrite {
 	//class variables that can only be accessed within the class
-	private int numberOfArtists;
 	private TopStreamingArtists artistList = new TopStreamingArtists();
 
 	//returns the value of the private variable numberOfArtists
