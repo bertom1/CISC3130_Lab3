@@ -4,7 +4,7 @@ Source code for the program can be found within the Main.java file. A sample out
 while the csv file used is titled "regional-global-weekly-latest.csv"  
 ## Implementation
 This program uses a Scanner object to read a csv file, then splits the comma seperated values using
-the .split() method. A custom regex code is used to handle any extra commas within the CSV entries. These values are stored in a String array so the artist name can be pulled from index
+the .split() method. A custom regex code is used to handle any extra commas within the CSV entries ([Source](https://stackoverflow.com/a/15739087)). These values are stored in a String array so the artist name can be pulled from index
 n (in this program n = 2.) The artist name is then stored in a HashMap using a String as the key and an integer as the value for number of occurances. To create the sorted sorted output file, a custom
 Linked list class is used (TopStreamingArtists) which uses a node class Artist. Nodes are added in sorted order, i.e. sorting is done with each addition instead of creating the list,
 then sorting. This is done with the method sortedAdd(Artist artist) in the TopStreamingArtists class, which is similar to the bubble sort algorithm as it compares the node being 
